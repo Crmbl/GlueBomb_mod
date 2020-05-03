@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    "xex",
+    " x "
+  ],
+  "key":
+  {
+    "e":
+    {
+      "item": "minecraft:gunpowder"
+    },
+    "x":
+    {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result":
+  {
+    "item": "gluebomb_mod:gluebomb_item",
+    "count": 6
+  }
+}
