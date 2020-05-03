@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gluebomb_mod:item/gluebomb_mod_texture"
+    "layer0": "gluebomb_mod:item/gluebomb_item"
   }
 }

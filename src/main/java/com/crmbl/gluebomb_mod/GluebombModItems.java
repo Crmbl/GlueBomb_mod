@@ -7,10 +7,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class GluebombModItems {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, GluebombMod.MOD_ID);
-    public static final RegistryObject<Item> GLUEBOMB_ITEM = ITEMS.register("gluebomb_item", () ->
-            new GluebombItem(new TridentItem.Properties()
-                    .maxStackSize(24)
-                    //.maxDamage(30)
+    public static final RegistryObject<GluebombItem> GLUEBOMB_ITEM = ITEMS.register("gluebomb_item", () ->
+            new GluebombItem(new Item.Properties()
+                    .maxStackSize(18)
                     .group(ItemGroup.COMBAT)
             )
     );

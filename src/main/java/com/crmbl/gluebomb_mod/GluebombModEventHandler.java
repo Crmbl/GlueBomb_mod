@@ -1,23 +1,26 @@
 package com.crmbl.gluebomb_mod;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.entity.projectile.SnowballEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.SnowballItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class GluebombModEventHandler {
 
@@ -69,18 +72,6 @@ public class GluebombModEventHandler {
     }
 
     @SubscribeEvent
-    public void onEquipmentChange(LivingEquipmentChangeEvent event) {
-        ItemStack stack = event.getFrom();
-        if (event.getSlot() == EquipmentSlotType.CHEST && stack.getItem() instanceof FlyingModItem) {
-            CompoundNBT tag = stack.getOrCreateTag();
-            if (tag.getBoolean("flying_mod_flying_item")) {
-                tag.putBoolean("flying_mod_flying_item", false);
-                stack.setTag(tag);
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onPlayerHurt(LivingHurtEvent event) {
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = ((PlayerEntity) event.getEntity());
@@ -88,7 +79,7 @@ public class GluebombModEventHandler {
             if (player != null) {
                 ItemStack itemStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 if (itemStack.getItem() instanceof FlyingModItem)
-                    itemStack.damageItem(10, player, playerEntity -> { *//*TODO play sound here*//* });
+                    itemStack.damageItem(10, player, playerEntity -> {  });
             }
         }
     }
@@ -103,25 +94,11 @@ public class GluebombModEventHandler {
                     itemStack.damageItem(itemStack.getMaxDamage(), player, playerEntity -> {});
             }
         }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
-        if (event.getEntity() instanceof PlayerEntity) {
-            PlayerRenderer playerRenderer = Minecraft.getInstance().getRenderManager().getSkinMap().get("default");
-            playerRenderer.addLayer(new FlyingModItemLayer<>(playerRenderer));
-            PlayerRenderer playerRendererSlim = Minecraft.getInstance().getRenderManager().getSkinMap().get("slim");
-            playerRendererSlim.addLayer(new FlyingModItemLayer<>(playerRendererSlim));
-        }
-    }
-
-    @SubscribeEvent
-    public void onStartTracking(PlayerEvent.StartTracking event) {
-        if (event.getTarget() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity target = ((ServerPlayerEntity) event.getTarget());
-            ServerPlayerEntity player = ((ServerPlayerEntity) event.getPlayer());
-            FlyingModPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new FlyingModPacket(target.getEntityId(), target.abilities.isFlying));
-        }
     }*/
+
+    /*@SubscribeEvent
+    public void onClientSetup (FMLClientSetupEvent event) {
+        //ModelLoader.addSpecialModel(GluebombModItems.GLUEBOMB_ITEM.get().getModelResourceLocation());
+    }*/
+
 }
