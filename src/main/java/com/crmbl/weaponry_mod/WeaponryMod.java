@@ -1,4 +1,4 @@
-package com.crmbl.gluebomb_mod;
+package com.crmbl.weaponry_mod;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -10,19 +10,17 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
 
-@Mod("gluebomb_mod")
-public class GluebombMod
+@Mod("weaponry_mod")
+public class WeaponryMod
 {
-    public static final String MOD_ID = "gluebomb_mod";
+    public static final String MOD_ID = "weaponry_mod";
 
-    public GluebombMod() {
+    public WeaponryMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new GluebombModEventHandler());
-        GluebombModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GluebombEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        WeaponryModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        WeaponryModEntityType.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -34,7 +32,7 @@ public class GluebombMod
     }
 
     private void onClientSetup(final FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(GluebombEntityTypes.GLUEBOMB.get(), manager ->
+        RenderingRegistry.registerEntityRenderingHandler(WeaponryModEntityType.THROWING_KNIFE.get(), manager ->
                 new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
     }
 }

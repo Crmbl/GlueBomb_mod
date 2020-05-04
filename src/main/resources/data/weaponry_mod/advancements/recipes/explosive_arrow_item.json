@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gluebomb_mod:gluebomb_item"
+      "weaponry_mod:explosive_arrow_item"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:slime_ball"
+            "item": "minecraft:gunpowder"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gluebomb_mod:gluebomb_item"
+        "recipe": "weaponry_mod:explosive_arrow_item"
       }
     }
   },

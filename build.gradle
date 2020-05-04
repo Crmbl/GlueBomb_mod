@@ -14,8 +14,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.0'
-group = 'com.crmbl.gluebomb_mod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'gluebomb_mod'
+group = 'com.crmbl.weaponry_mod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'weaponry_mod'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -115,12 +115,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "gluebomb_mod",
-            "Specification-Vendor": "gluebomb_mod_crmbl",
+            "Specification-Title": "weaponry_mod",
+            "Specification-Vendor": "weaponry_mod_crmbl",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"gluebomb_mod_crmbl",
+            "Implementation-Vendor" :"weaponry_mod_crmbl",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

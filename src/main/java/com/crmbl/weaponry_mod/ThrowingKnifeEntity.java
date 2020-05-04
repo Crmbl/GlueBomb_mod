@@ -1,23 +1,17 @@
-package com.crmbl.gluebomb_mod;
+package com.crmbl.weaponry_mod;
 
-import com.google.common.collect.Lists;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.SChangeGameStatePacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -32,10 +26,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.LogManager;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
-public class GluebombEntity extends ProjectileItemEntity {
+public class ThrowingKnifeEntity extends ProjectileItemEntity {
     private LivingEntity gluebombThrower;
     @Nullable
     private BlockState inBlockState;
@@ -47,27 +40,27 @@ public class GluebombEntity extends ProjectileItemEntity {
     private SoundEvent hitSound = SoundEvents.ENTITY_ARROW_HIT;
     private double damage = 0.0D;
 
-    public GluebombEntity(EntityType<? extends GluebombEntity> type, World worldIn) {
+    public ThrowingKnifeEntity(EntityType<? extends ThrowingKnifeEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
-    public GluebombEntity(World worldIn, LivingEntity throwerIn) {
-        super(GluebombEntityTypes.GLUEBOMB.get(), throwerIn, worldIn);
+    public ThrowingKnifeEntity(World worldIn, LivingEntity throwerIn) {
+        super(WeaponryModEntityType.THROWING_KNIFE.get(), throwerIn, worldIn);
         this.gluebombThrower = throwerIn;
     }
 
-    public GluebombEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-        super(GluebombEntityTypes.GLUEBOMB.get(), worldIn);
+    public ThrowingKnifeEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
+        super(WeaponryModEntityType.THROWING_KNIFE.get(), worldIn);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public GluebombEntity(World worldIn, double x, double y, double z) {
+    public ThrowingKnifeEntity(World worldIn, double x, double y, double z) {
         super(EntityType.ENDER_PEARL, x, y, z, worldIn);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return GluebombModItems.GLUEBOMB_ITEM.get();
+        return WeaponryModItems.THROWING_KNIFE.get();
     }
 
     public void tick() {
@@ -92,12 +85,12 @@ public class GluebombEntity extends ProjectileItemEntity {
         if (this.inGround) {
             if (this.inBlockState != blockstate && this.world.func_226664_a_(this.getBoundingBox().grow(0.06D))) {
                 this.inGround = false;
-                this.setMotion(vec3d.mul((double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F)));
+                this.setMotion(vec3d.mul(this.rand.nextFloat() * 0.1F, this.rand.nextFloat() * 0.1F, this.rand.nextFloat() * 0.1F));
                 this.ticksOnEntity = 0;
                 this.ticksInAir = 0;
-            } else if (!this.world.isRemote) {
-                this.func_225516_i_();
             }
+            else if (!this.world.isRemote)
+                this.func_225516_i_();
 
             ++this.timeInEntity;
         } else {
@@ -141,11 +134,6 @@ public class GluebombEntity extends ProjectileItemEntity {
             double d3 = vec3d.x;
             double d4 = vec3d.y;
             double d0 = vec3d.z;
-            /*if (this.getIsCritical()) {
-                for(int i = 0; i < 4; ++i) {
-                    this.world.addParticle(ParticleTypes.CRIT, this.getPosX() + d3 * (double)i / 4.0D, this.getPosY() + d4 * (double)i / 4.0D, this.getPosZ() + d0 * (double)i / 4.0D, -d3, -d4 + 0.2D, -d0);
-                }
-            }*/
 
             double d5 = this.getPosX() + d3;
             double d1 = this.getPosY() + d4;
@@ -170,8 +158,8 @@ public class GluebombEntity extends ProjectileItemEntity {
 
     protected void func_225516_i_() {
         ++this.ticksOnEntity;
-        if (this.ticksOnEntity >= 800) {
-            LogManager.getLogger().info("BOOM");
+        if (this.ticksOnEntity >= 40) {
+            this.explode();
             this.remove();
         }
     }
@@ -179,6 +167,15 @@ public class GluebombEntity extends ProjectileItemEntity {
     @Nullable
     public Entity getShooter() {
         return this.gluebombThrower != null && this.world instanceof ServerWorld ? ((ServerWorld)this.world).getEntityByUuid(this.gluebombThrower.getUniqueID()) : null;
+    }
+
+    public void explode() {
+        if (!this.onGround) {
+            LogManager.getLogger().info("BOOM");
+        }
+        else {
+            LogManager.getLogger().info("BOOM ON SOMEONE");
+        }
     }
 
     /**

@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    " x ",
-    "xex",
-    " x "
+    " e ",
+    " a ",
+    "   "
   ],
   "key":
   {
@@ -12,14 +12,14 @@
     {
       "item": "minecraft:gunpowder"
     },
-    "x":
+    "a":
     {
-      "item": "minecraft:slime_ball"
+      "item": "minecraft:arrow"
     }
   },
   "result":
   {
-    "item": "gluebomb_mod:gluebomb_item",
-    "count": 6
+    "item": "weaponry_mod:explosive_arrow_item",
+    "count": 1
   }
 }

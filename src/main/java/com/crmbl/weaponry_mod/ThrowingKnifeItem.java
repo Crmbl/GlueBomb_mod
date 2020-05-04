@@ -1,4 +1,4 @@
-package com.crmbl.gluebomb_mod;
+package com.crmbl.weaponry_mod;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,8 +10,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
-public class GluebombItem extends Item {
-    public GluebombItem(Item.Properties builder) {
+public class ThrowingKnifeItem extends Item {
+    public ThrowingKnifeItem(Item.Properties builder) {
         super(builder);
     }
 
@@ -20,7 +20,7 @@ public class GluebombItem extends Item {
         worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldownTracker().setCooldown(this, 20);
         if (!worldIn.isRemote) {
-            GluebombEntity glueBombEntity = new GluebombEntity(worldIn, playerIn);
+            ThrowingKnifeEntity glueBombEntity = new ThrowingKnifeEntity(worldIn, playerIn);
             glueBombEntity.setItem(itemstack);
             glueBombEntity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
             worldIn.addEntity(glueBombEntity);
