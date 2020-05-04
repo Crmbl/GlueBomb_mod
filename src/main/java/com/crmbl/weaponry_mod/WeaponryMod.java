@@ -1,8 +1,6 @@
 package com.crmbl.weaponry_mod;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +30,6 @@ public class WeaponryMod
     }
 
     private void onClientSetup(final FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(WeaponryModEntityType.THROWING_KNIFE.get(), manager ->
-                new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(WeaponryModEntityType.THROWING_KNIFE.get(), ThrowingKnifeRenderer::new);
     }
 }

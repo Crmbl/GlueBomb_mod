@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " e ",
+    " a ",
+    "   "
+  ],
+  "key":
+  {
+    "e":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "a":
+    {
+      "item": "minecraft:stick"
+    }
+  },
+  "result":
+  {
+    "item": "weaponry_mod:throwing_knife_item",
+    "count": 4
+  }
+}
