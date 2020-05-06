@@ -1,16 +1,15 @@
 package com.crmbl.weaponry_mod;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -18,56 +17,79 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ThrowingKnifeEntity extends ProjectileItemEntity {
+public class ThrowingKnifeEntity extends AbstractArrowEntity {
+    private ItemStack thrownStack = new ItemStack(WeaponryModItems.THROWING_KNIFE.get());
+    private int ticksIn;
 
-    public ThrowingKnifeEntity(EntityType<? extends ProjectileItemEntity> type, World worldIn) {
+    public ThrowingKnifeEntity(EntityType<? extends ThrowingKnifeEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
-    public ThrowingKnifeEntity(World worldIn, LivingEntity throwerIn) {
-        super(WeaponryModEntityType.THROWING_KNIFE.get(), throwerIn, worldIn);
-    }
-
-    @Override
-    protected Item getDefaultItem() {
-        return WeaponryModItems.THROWING_KNIFE.get();
+    public ThrowingKnifeEntity(World worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
+        super(WeaponryModEntityType.THROWING_KNIFE.get(), thrower, worldIn);
+        this.thrownStack = thrownStackIn.copy();
     }
 
     @OnlyIn(Dist.CLIENT)
-    private IParticleData makeParticle() {
-        ItemStack itemstack = this.func_213882_k();
-        return itemstack.isEmpty() ? ParticleTypes.CRIT : new ItemParticleData(ParticleTypes.ITEM, itemstack);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
-        if (id == 3) {
-            IParticleData iparticledata = this.makeParticle();
-
-            for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            }
-        }
+    public ThrowingKnifeEntity(World worldIn, double x, double y, double z) {
+        super(WeaponryModEntityType.THROWING_KNIFE.get(), x, y, z, worldIn);
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
+    protected void onEntityHit(EntityRayTraceResult result) {
+        this.ticksIn = 0;
         if (result.getType() == RayTraceResult.Type.ENTITY) {
-            Entity entity = ((EntityRayTraceResult)result).getEntity();
-            float amountThrownDamage = 7F;
-            float amountThornsDamage = 5F;
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), amountThrownDamage);
-            entity.attackEntityFrom(DamageSource.causeThornsDamage(this), amountThornsDamage);
+            Entity entity = result.getEntity();
+            Entity shooter = this.getShooter();
+
+            float f = 8.0F;
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingentity = (LivingEntity)entity;
+                f += EnchantmentHelper.getModifierForCreature(this.thrownStack, livingentity.getCreatureAttribute());
+            }
+
+            DamageSource damageSource = DamageSource.causeThrownDamage(this, (shooter == null ? this : shooter));
+            if (entity.attackEntityFrom(damageSource, f)) {
+                if (entity instanceof LivingEntity) {
+                    LivingEntity livingentity = (LivingEntity)entity;
+                    if (shooter instanceof LivingEntity)
+                        EnchantmentHelper.applyThornEnchantments(livingentity, shooter);
+
+                    this.arrowHit(livingentity);
+                }
+            }
+
+            //TODO remove arrow hit sound??
+            //TODO stuck in entity like on block
         }
 
-        if (!this.world.isRemote) {
-            this.world.setEntityState(this, (byte)3);
-            this.remove();
-        }
+        this.setMotion(this.getMotion().mul(-0.01D, -0.1D, -0.01D));
+        this.playSound(getHitEntitySound(), 1.0F, 1.0F);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public boolean isInRangeToRender3d(double x, double y, double z) {
+        return true;
+    }
+
+    @Override
+    protected ItemStack getArrowStack() {
+        return this.thrownStack.copy();
     }
 
     @Override
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    public void tick() {
+        ++this.ticksIn;
+        if (this.ticksIn >= 500 && !this.world.isRemote) //TODO CHANGE VALUE AFTER DEBUGGING
+            this.remove();
+        super.tick();
+    }
+
+    protected SoundEvent getHitEntitySound() {
+        return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
     }
 }
