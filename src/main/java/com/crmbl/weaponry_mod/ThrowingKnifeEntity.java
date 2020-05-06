@@ -64,7 +64,6 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
             this.remove();
             //TODO improve damage behavior ?
             //TODO stuck in entity like on block
-            //TODO improve trajectory of projectile, too much curve down
         }
         else {
             this.setMotion(this.getMotion().mul(-0.01D, -0.1D, -0.01D));

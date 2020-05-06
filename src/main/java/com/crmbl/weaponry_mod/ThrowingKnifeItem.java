@@ -24,7 +24,7 @@ public class ThrowingKnifeItem extends Item {
         if (!worldIn.isRemote) {
             ThrowingKnifeEntity throwingKnifeEntity = new ThrowingKnifeEntity(worldIn, playerIn, itemstack);
             throwingKnifeEntity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-            throwingKnifeEntity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+            throwingKnifeEntity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 2.2F, 1.0F);
             worldIn.addEntity(throwingKnifeEntity);
             worldIn.playMovingSound(null, throwingKnifeEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.F);
         }
