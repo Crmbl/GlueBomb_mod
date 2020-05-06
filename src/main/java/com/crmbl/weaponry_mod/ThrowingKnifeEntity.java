@@ -20,6 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class ThrowingKnifeEntity extends AbstractArrowEntity {
     private ItemStack thrownStack = new ItemStack(WeaponryModItems.THROWING_KNIFE.get());
     private int ticksIn;
+    private final int maxTicks = 400;
 
     public ThrowingKnifeEntity(EntityType<? extends ThrowingKnifeEntity> type, World worldIn) {
         super(type, worldIn);
@@ -42,29 +43,33 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
             Entity entity = result.getEntity();
             Entity shooter = this.getShooter();
 
-            float f = 8.0F;
+            float amount = 8.0F;
             if (entity instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity)entity;
-                f += EnchantmentHelper.getModifierForCreature(this.thrownStack, livingentity.getCreatureAttribute());
+                amount += EnchantmentHelper.getModifierForCreature(this.thrownStack, livingentity.getCreatureAttribute());
             }
 
             DamageSource damageSource = DamageSource.causeThrownDamage(this, (shooter == null ? this : shooter));
-            if (entity.attackEntityFrom(damageSource, f)) {
+            if (entity.attackEntityFrom(damageSource, amount)) {
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingentity = (LivingEntity)entity;
                     if (shooter instanceof LivingEntity)
                         EnchantmentHelper.applyThornEnchantments(livingentity, shooter);
 
                     this.arrowHit(livingentity);
+                    this.playSound(getHitEntitySound(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                 }
             }
 
-            //TODO remove arrow hit sound??
+            this.remove();
+            //TODO improve damage behavior ?
             //TODO stuck in entity like on block
+            //TODO improve trajectory of projectile, too much curve down
         }
-
-        this.setMotion(this.getMotion().mul(-0.01D, -0.1D, -0.01D));
-        this.playSound(getHitEntitySound(), 1.0F, 1.0F);
+        else {
+            this.setMotion(this.getMotion().mul(-0.01D, -0.1D, -0.01D));
+            this.playSound(getHitEntitySound(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+        }
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -84,7 +89,7 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
 
     public void tick() {
         ++this.ticksIn;
-        if (this.ticksIn >= 500 && !this.world.isRemote) //TODO CHANGE VALUE AFTER DEBUGGING
+        if (this.ticksIn >= this.maxTicks && !this.world.isRemote)
             this.remove();
         super.tick();
     }
