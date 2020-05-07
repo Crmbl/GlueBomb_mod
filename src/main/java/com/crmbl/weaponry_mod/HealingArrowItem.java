@@ -10,13 +10,13 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.World;
 
-public class ExplosiveArrowItem extends ArrowItem {
-    public ExplosiveArrowItem(Properties properties) {
+public class HealingArrowItem extends ArrowItem {
+    public HealingArrowItem(Properties properties) {
         super(properties);
     }
 
     public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-        return new ExplosiveArrowEntity(worldIn, shooter);
+        return new HealingArrowEntity(worldIn, shooter);
     }
 
     @Override

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "weaponry_mod:item/healing_arrow_item"
+  }
+}

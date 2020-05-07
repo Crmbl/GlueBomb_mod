@@ -19,8 +19,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ThrowingKnifeEntity extends AbstractArrowEntity {
 
-    //TODO improve damage behavior ?
-    //TODO stuck in entity like on block
+    //TODO improve damage behavior/velocity/cooldown
 
     private ItemStack thrownStack = new ItemStack(WeaponryModItems.THROWING_KNIFE.get());
     private int ticksIn;

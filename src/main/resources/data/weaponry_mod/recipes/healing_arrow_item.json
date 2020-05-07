@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " e ",
+    " a ",
+    " x "
+  ],
+  "key":
+  {
+    "e":
+    {
+      "item": "minecraft:nether_wart"
+    },
+    "a":
+    {
+      "item": "minecraft:arrow"
+    },
+    "x":
+    {
+      "item": "minecraft:glistering_melon_slice"
+    }
+  },
+  "result":
+  {
+    "item": "weaponry_mod:healing_arrow_item",
+    "count": 1
+  }
+}

@@ -13,4 +13,6 @@ public class WeaponryModEntityType {
             EntityType.Builder.<ThrowingKnifeEntity>create(ThrowingKnifeEntity::new, EntityClassification.MISC).build("throwing_knife_item"));
     public static final RegistryObject<EntityType<ExplosiveArrowEntity>> EXPLOSIVE_ARROW = ENTITY_TYPES.register("explosive_arrow_item", () ->
             EntityType.Builder.<ExplosiveArrowEntity>create(ExplosiveArrowEntity::new, EntityClassification.MISC).build("explosive_arrow_item"));
+    public static final RegistryObject<EntityType<HealingArrowEntity>> HEALING_ARROW = ENTITY_TYPES.register("healing_arrow_item", () ->
+            EntityType.Builder.<HealingArrowEntity>create(HealingArrowEntity::new, EntityClassification.MISC).build("healing_arrow_item"));
 }

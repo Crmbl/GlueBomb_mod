@@ -19,4 +19,8 @@ public class WeaponryModItems {
                     .group(ItemGroup.COMBAT)
             )
     );
+    public static final RegistryObject<HealingArrowItem> HEALING_ARROW = ITEMS.register("healing_arrow_item", () ->
+            new HealingArrowItem(new Item.Properties()
+                    .maxStackSize(64)
+                    .group(ItemGroup.COMBAT)));
 }
