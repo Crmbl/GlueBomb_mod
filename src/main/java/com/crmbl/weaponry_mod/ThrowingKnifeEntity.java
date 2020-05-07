@@ -18,6 +18,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ThrowingKnifeEntity extends AbstractArrowEntity {
+
+    //TODO improve damage behavior ?
+    //TODO stuck in entity like on block
+
     private ItemStack thrownStack = new ItemStack(WeaponryModItems.THROWING_KNIFE.get());
     private int ticksIn;
     private final int maxTicks = 400;
@@ -62,8 +66,6 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
             }
 
             this.remove();
-            //TODO improve damage behavior ?
-            //TODO stuck in entity like on block
         }
         else {
             this.setMotion(this.getMotion().mul(-0.01D, -0.1D, -0.01D));

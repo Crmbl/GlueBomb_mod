@@ -13,8 +13,8 @@ public class WeaponryModItems {
                     .group(ItemGroup.COMBAT)
             )
     );
-    public static final RegistryObject<ThrowingKnifeItem> EXPLOSIVE_ARROW = ITEMS.register("explosive_arrow_item", () ->
-            new ThrowingKnifeItem(new Item.Properties()
+    public static final RegistryObject<ExplosiveArrowItem> EXPLOSIVE_ARROW = ITEMS.register("explosive_arrow_item", () ->
+            new ExplosiveArrowItem(new Item.Properties()
                     .maxStackSize(64)
                     .group(ItemGroup.COMBAT)
             )

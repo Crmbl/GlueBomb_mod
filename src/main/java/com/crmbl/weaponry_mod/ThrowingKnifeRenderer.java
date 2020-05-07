@@ -35,7 +35,7 @@ public class ThrowingKnifeRenderer extends EntityRenderer<ThrowingKnifeEntity> {
         IBakedModel ibakedModel = this.itemRenderer.getItemModelWithOverrides(itemstack, entityIn.world, null);
 
         matrixStackIn.push();
-        matrixStackIn.scale(1.6F, 1.6F, 1.6F);
+        matrixStackIn.scale(1.7F, 1.7F, 1.7F);
         matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw) - 90.0F));
         matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch) - 45.0F));
         matrixStackIn.translate(0.0, -0.17, 0.0);

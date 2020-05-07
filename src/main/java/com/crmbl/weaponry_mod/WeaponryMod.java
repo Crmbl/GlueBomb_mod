@@ -20,5 +20,6 @@ public class WeaponryMod
 
     private void onClientSetup(final FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(WeaponryModEntityType.THROWING_KNIFE.get(), ThrowingKnifeRenderer::new);
+        //RenderingRegistry.registerEntityRenderingHandler(WeaponryModEntityType.EXPLOSIVE_ARROW.get(), ExplosiveArrowRenderer::new);
     }
 }

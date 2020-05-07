@@ -3,14 +3,14 @@
   "pattern":
   [
     " e ",
-    " a ",
-    "   "
+    " e ",
+    " a "
   ],
   "key":
   {
     "e":
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:iron_nugget"
     },
     "a":
     {
