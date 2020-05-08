@@ -46,7 +46,7 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
             Entity entity = result.getEntity();
             Entity shooter = this.getShooter();
 
-            float amount = 8.0F;
+            float amount = 5.0F;
             if (entity instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity)entity;
                 amount += EnchantmentHelper.getModifierForCreature(this.thrownStack, livingentity.getCreatureAttribute());
