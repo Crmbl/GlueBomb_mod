@@ -16,8 +16,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ExplosiveArrowEntity extends AbstractArrowEntity {
 
-    //TODO improve damage behavior
-
     protected ExplosiveArrowEntity(EntityType<? extends AbstractArrowEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -50,7 +48,7 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
     @Override
     public void shoot(Entity shooter, float pitch, float yaw, float p_184547_4_, float velocity, float inaccuracy) {
         super.shoot(shooter, pitch, yaw, p_184547_4_, velocity, inaccuracy);
-        this.world.playMovingSound(null, shooter, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.PLAYERS, 0.8F, 1.0F);
+        this.world.playMovingSound(null, shooter, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 
     @Override

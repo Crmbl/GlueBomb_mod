@@ -19,7 +19,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ThrowingKnifeEntity extends AbstractArrowEntity {
 
-    //TODO improve damage behavior/velocity/cooldown
+    //TODO improve damage behavior on armor
 
     private ItemStack thrownStack = new ItemStack(WeaponryModItems.THROWING_KNIFE.get());
     private int ticksIn;
@@ -32,6 +32,7 @@ public class ThrowingKnifeEntity extends AbstractArrowEntity {
     public ThrowingKnifeEntity(World worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
         super(WeaponryModEntityType.THROWING_KNIFE.get(), thrower, worldIn);
         this.thrownStack = thrownStackIn.copy();
+        this.thrownStack.setCount(1);
     }
 
     @OnlyIn(Dist.CLIENT)
